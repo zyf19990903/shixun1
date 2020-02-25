@@ -1,9 +1,11 @@
-package com.zhengyuanfang.adnimistration.dto.out;
+package com.zhengyuanfang.store.dto.out;
 
 import java.util.List;
 
-public class OrderInvoiceShowOutDTO {
+public class OrderShowOutDTO {
     private Long orderId;
+    private Integer customerName;
+    private Byte status;
     private Double totalPrice;
     private Integer rewordPoints;
     private Long createTimestamp;
@@ -16,8 +18,6 @@ public class OrderInvoiceShowOutDTO {
     private Double invoicePrice;
     private String comment;
     private List<OrderProductShowOutDTO> orderProducts;
-    private String email;
-    private String mobile;
 
     public Long getOrderId() {
         return orderId;
@@ -25,6 +25,22 @@ public class OrderInvoiceShowOutDTO {
 
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
+    }
+
+    public Integer getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(Integer customerName) {
+        this.customerName = customerName;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 
     public Double getTotalPrice() {
@@ -121,21 +137,5 @@ public class OrderInvoiceShowOutDTO {
 
     public void setOrderProducts(List<OrderProductShowOutDTO> orderProducts) {
         this.orderProducts = orderProducts;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
     }
 }

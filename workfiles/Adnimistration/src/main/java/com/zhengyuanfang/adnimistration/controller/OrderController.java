@@ -36,7 +36,7 @@ public class OrderController {
     }
 
     /*
-     *查看当前订单的运输费用信息
+     *查看当前订单的发货
      */
     @GetMapping("/getShipInfo")
     public OrderShipShowOutDTO getShipInfo(@RequestParam Long orderId){
