@@ -31,8 +31,8 @@ public class ImageController {
         }
         String uuid = UUID.randomUUID().toString();
         String filename = String.format("%s.%s", uuid, ext);
-        String filepath = String.format("www/image/%s", filename);
-        try(FileOutputStream out = new FileOutputStream(filepath)){
+        String filepath = String.format("www\\image\\%s", filename);
+        try(FileOutputStream out = new FileOutputStream(filename)){
             byte[] data = image.getBytes();
             out.write(data);
         }
