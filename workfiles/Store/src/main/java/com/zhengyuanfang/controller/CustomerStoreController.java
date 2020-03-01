@@ -2,12 +2,15 @@ package com.zhengyuanfang.controller;
 
 import com.zhengyuanfang.dto.in.*;
 import com.zhengyuanfang.dto.out.CustomerGetProfileOutDTO;
-
+import com.zhengyuanfang.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customer")
 public class CustomerStoreController {
+    @Autowired
+    private CustomerService customerService;
 
     /*
      *用户登录
@@ -21,8 +24,9 @@ public class CustomerStoreController {
     *用户注册
     */
     @PostMapping("/register")
-    public Integer register(CustomerRegisterInDto customerRegisterOutDto){
-        return 0;
+    public Integer register(@RequestBody CustomerRegisterInDto customerRegisterInDTO){
+        Integer customerId = customerService.register(customerRegisterInDTO);
+        return customerId;
     }
 
     /*

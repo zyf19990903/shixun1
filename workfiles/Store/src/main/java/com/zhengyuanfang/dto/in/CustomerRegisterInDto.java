@@ -2,20 +2,11 @@ package com.zhengyuanfang.dto.in;
 
 public class CustomerRegisterInDto {
     private String username;
-    private String realname;
-    private String mobile;
+    private String realName;
     private String email;
+    private String mobile;
     private String password;
-    private boolean newsSubscribed;
-
-    public CustomerRegisterInDto(String username, String realname, String mobile, String email, String password, boolean newsSubscribed) {
-        this.username = username;
-        this.realname = realname;
-        this.mobile = mobile;
-        this.email = email;
-        this.password = password;
-        this.newsSubscribed = newsSubscribed;
-    }
+    private Boolean newsSubscribed;
 
     public String getUsername() {
         return username;
@@ -25,20 +16,12 @@ public class CustomerRegisterInDto {
         this.username = username;
     }
 
-    public String getRealname() {
-        return realname;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setRealname(String realname) {
-        this.realname = realname;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public String getEmail() {
@@ -49,6 +32,14 @@ public class CustomerRegisterInDto {
         this.email = email;
     }
 
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -57,11 +48,11 @@ public class CustomerRegisterInDto {
         this.password = password;
     }
 
-    public boolean isNewsSubscribed() {
+    public Boolean getNewsSubscribed() {
         return newsSubscribed;
     }
 
-    public void setNewsSubscribed(boolean newsSubscribed) {
+    public void setNewsSubscribed(Boolean newsSubscribed) {
         this.newsSubscribed = newsSubscribed;
     }
 }
