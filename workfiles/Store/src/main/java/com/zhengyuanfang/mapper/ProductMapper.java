@@ -1,5 +1,7 @@
 package com.zhengyuanfang.mapper;
 
+import com.github.pagehelper.Page;
+import com.zhengyuanfang.dto.out.ProductListOutDTO;
 import com.zhengyuanfang.po.Product;
 
 ;
@@ -16,4 +18,6 @@ public interface ProductMapper {
     int updateByPrimaryKeySelective(Product record);
 
     int updateByPrimaryKey(Product record);
+
+    Page<ProductListOutDTO> findAll();
 }

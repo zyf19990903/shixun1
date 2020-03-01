@@ -7,8 +7,17 @@ public class ProductListOutDTO {
     private Double price;
     private Double discount;
     private Integer stockQuantity;
+    private String productAbstract;
     private Byte status;
     private String mainPicUrl;
+
+    public String getProductAbstract() {
+        return productAbstract;
+    }
+
+    public void setProductAbstract(String productAbstract) {
+        this.productAbstract = productAbstract;
+    }
 
     public Integer getProductId() {
         return productId;
