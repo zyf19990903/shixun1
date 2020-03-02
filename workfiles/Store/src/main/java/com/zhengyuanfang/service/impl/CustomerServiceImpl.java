@@ -32,6 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setStatus((byte) CustomerStatus.Enable.ordinal());
         customer.setRewordPoints(0);
 
+        //密码加密
         String password = customerRegisterInDTO.getPassword();
         String bcryptHashString = BCrypt.withDefaults().hashToString(12, password.toCharArray());
         customer.setEncryptedPassword(bcryptHashString);
@@ -40,5 +41,17 @@ public class CustomerServiceImpl implements CustomerService {
         Integer customerId = customer.getCustomerId();
 
         return customerId;
+    }
+
+    @Override
+    public Customer getByUsername(String username) {
+        Customer customer = customerMapper.selectByUsername(username);
+        return customer;
+    }
+
+    @Override
+    public Customer getById(Integer customerId) {
+        Customer customer = customerMapper.selectByPrimaryKey(customerId);
+        return customer;
     }
 }
