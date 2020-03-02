@@ -1,8 +1,8 @@
 package com.zhengyuanfang.service.impl;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.zhengyuanfang.CustomerStatus;
 import com.zhengyuanfang.dto.in.CustomerRegisterInDto;
+import com.zhengyuanfang.enumeration.CustomerStatus;
 import com.zhengyuanfang.mapper.CustomerMapper;
 import com.zhengyuanfang.po.Customer;
 import com.zhengyuanfang.service.CustomerService;
