@@ -10,7 +10,14 @@ import com.zhengyuanfang.po.Customer;
 import com.zhengyuanfang.service.CustomerService;
 import com.zhengyuanfang.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+
+import javax.xml.bind.DatatypeConverter;
+import java.security.SecureRandom;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/customer")
@@ -20,6 +27,18 @@ public class CustomerStoreController {
     private CustomerService customerService;
     @Autowired
     private JWTUtil jwtUtil;
+
+    @Autowired
+    private SecureRandom secureRandom;
+
+//    @Autowired
+//    private JavaMailSender mailSender;
+
+    @Value("${spring.mail.username}")
+    private String fromEmail;
+
+    private HashMap<String, String> emailPwdResetCodeMap = new HashMap();
+
     /*
      *用户登录
      */
@@ -105,8 +124,20 @@ public class CustomerStoreController {
      *用户获取重置代码
      */
     @GetMapping("/getPwdResetCode")
-    public String getPwdResetCode(@RequestParam String email){
-        return null;
+    public void getPwdResetCode(@RequestParam String email) throws ClientException {
+        Customer customer = customerService.getByEmail(email);
+        if (customer == null){
+            throw new ClientException(ClientExceptionConstant.CUSTOMER_USERNAME_NOT_EXIST_ERRCODE, ClientExceptionConstant.CUSTOMER_USERNAME_NOT_EXIST_ERRMSG);
+        }
+        byte[] bytes = secureRandom.generateSeed(3);
+        String hex = DatatypeConverter.printHexBinary(bytes);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(fromEmail);
+        message.setTo(email);
+        message.setSubject("jcart重置密码");
+        message.setText(hex);
+       // mailSender.send(message);
+        emailPwdResetCodeMap.put("PwdResetCode"+email, hex);
     }
 
     /*

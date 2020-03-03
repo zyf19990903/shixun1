@@ -17,4 +17,6 @@ public interface CustomerMapper {
     int updateByPrimaryKey(Customer record);
 
     Customer selectByUsername(String username);
+
+    Customer selectByEmail(String email);
 }
