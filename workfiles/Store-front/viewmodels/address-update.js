@@ -22,7 +22,7 @@ var addressupdate = new Vue({
            this.updateAddress();
         },
         getAddressById() {
-            axios.get('/address/getAddressByCustomerId', {
+            axios.get('/address/getById', {
                 params: {
                     addressId: this.addressId
                 }
