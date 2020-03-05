@@ -5,15 +5,14 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.zhengyuanfang.dto.in.OrderCheckoutInDTO;
 import com.zhengyuanfang.dto.in.OrderProductInDTO;
+import com.zhengyuanfang.dto.out.OrderHistoryListOutDTO;
 import com.zhengyuanfang.dto.out.OrderShowOutDTO;
 import com.zhengyuanfang.enumeration.OrderStatus;
 import com.zhengyuanfang.mapper.OrderDetailMapper;
 import com.zhengyuanfang.mapper.OrderMapper;
-import com.zhengyuanfang.po.Address;
-import com.zhengyuanfang.po.Order;
-import com.zhengyuanfang.po.OrderDetail;
-import com.zhengyuanfang.po.Product;
+import com.zhengyuanfang.po.*;
 import com.zhengyuanfang.service.AddressService;
+import com.zhengyuanfang.service.OrderHistoryService;
 import com.zhengyuanfang.service.OrderService;
 import com.zhengyuanfang.service.ProductService;
 import com.zhengyuanfang.vo.OrderProductVO;
@@ -40,6 +39,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private AddressService addressService;
 
+    @Autowired
+    private OrderHistoryService orderHistoryService;
 
     @Override
     public Page<Order> getByCustomerId(Integer pageNum, Integer customerId) {
@@ -69,8 +70,21 @@ public class OrderServiceImpl implements OrderService {
         orderShowOutDTO.setInvoicePrice(orderDetail.getInvoicePrice());
         orderShowOutDTO.setComment(orderDetail.getComment());
 
+        List<OrderProductVO> orderProductVOS = JSON.parseArray(orderDetail.getOrderProducts(), OrderProductVO.class);
+        orderShowOutDTO.setOrderProducts(orderProductVOS);
 
-        return null;
+        List<OrderHistory> orderHistories = orderHistoryService.getByOrderId(orderId);
+        List<OrderHistoryListOutDTO> orderHistoryListOutDTOS = orderHistories.stream().map(orderHistory -> {
+            OrderHistoryListOutDTO orderHistoryListOutDTO = new OrderHistoryListOutDTO();
+            orderHistoryListOutDTO.setTimestamp(orderHistory.getTime().getTime());
+            orderHistoryListOutDTO.setOrderStatus(orderHistory.getOrderStatus());
+            orderHistoryListOutDTO.setComment(orderHistory.getComment());
+            return orderHistoryListOutDTO;
+        }).collect(Collectors.toList());
+
+        orderShowOutDTO.setOrderHistories(orderHistoryListOutDTOS);
+
+        return orderShowOutDTO;
     }
 
     @Override

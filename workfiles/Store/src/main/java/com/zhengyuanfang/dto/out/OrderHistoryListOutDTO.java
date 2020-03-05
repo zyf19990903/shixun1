@@ -1,44 +1,16 @@
 package com.zhengyuanfang.dto.out;
 
 public class OrderHistoryListOutDTO {
-    private Long orderHistoryId;
-    private Long orderId;
-    private String customername;
-    private int quantity;
+    private Long timestamp;
     private Byte orderStatus;
-    private Double totalprice;
-    private Long createtime;
+    private String comment;
 
-    public Long getOrderHistoryId() {
-        return orderHistoryId;
+    public Long getTimestamp() {
+        return timestamp;
     }
 
-    public void setOrderHistoryId(Long orderHistoryId) {
-        this.orderHistoryId = orderHistoryId;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public String getCustomername() {
-        return customername;
-    }
-
-    public void setCustomername(String customername) {
-        this.customername = customername;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public Byte getOrderStatus() {
@@ -49,19 +21,11 @@ public class OrderHistoryListOutDTO {
         this.orderStatus = orderStatus;
     }
 
-    public Double getTotalprice() {
-        return totalprice;
+    public String getComment() {
+        return comment;
     }
 
-    public void setTotalprice(Double totalprice) {
-        this.totalprice = totalprice;
-    }
-
-    public Long getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Long createtime) {
-        this.createtime = createtime;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

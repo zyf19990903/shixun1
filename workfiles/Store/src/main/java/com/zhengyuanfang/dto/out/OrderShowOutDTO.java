@@ -1,10 +1,12 @@
 package com.zhengyuanfang.dto.out;
 
+import com.zhengyuanfang.vo.OrderProductVO;
+
+
 import java.util.List;
 
 public class OrderShowOutDTO {
     private Long orderId;
-    private Integer customerName;
     private Byte status;
     private Double totalPrice;
     private Integer rewordPoints;
@@ -17,7 +19,8 @@ public class OrderShowOutDTO {
     private String invoiceAddress;
     private Double invoicePrice;
     private String comment;
-    private List<OrderProductShowOutDTO> orderProducts;
+    private List<OrderProductVO> orderProducts;
+    private List<OrderHistoryListOutDTO> orderHistories;
 
     public Long getOrderId() {
         return orderId;
@@ -25,14 +28,6 @@ public class OrderShowOutDTO {
 
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
-    }
-
-    public Integer getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(Integer customerName) {
-        this.customerName = customerName;
     }
 
     public Byte getStatus() {
@@ -131,11 +126,19 @@ public class OrderShowOutDTO {
         this.comment = comment;
     }
 
-    public List<OrderProductShowOutDTO> getOrderProducts() {
+    public List<OrderHistoryListOutDTO> getOrderHistories() {
+        return orderHistories;
+    }
+
+    public void setOrderHistories(List<OrderHistoryListOutDTO> orderHistories) {
+        this.orderHistories = orderHistories;
+    }
+
+    public List<OrderProductVO> getOrderProducts() {
         return orderProducts;
     }
 
-    public void setOrderProducts(List<OrderProductShowOutDTO> orderProducts) {
+    public void setOrderProducts(List<OrderProductVO> orderProducts) {
         this.orderProducts = orderProducts;
     }
 }
