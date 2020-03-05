@@ -1,5 +1,6 @@
 package com.zhengyuanfang.mapper;
 
+import com.github.pagehelper.Page;
 import com.zhengyuanfang.po.Customer;
 
 public interface CustomerMapper {
@@ -14,4 +15,6 @@ public interface CustomerMapper {
     int updateByPrimaryKeySelective(Customer record);
 
     int updateByPrimaryKey(Customer record);
+
+    Page<Customer> findAll();
 }
