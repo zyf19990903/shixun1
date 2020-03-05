@@ -8,10 +8,10 @@ var addresslist = new Vue({
     },
     methods: {
         getMyAddresses() {
-            axios.get('/address/getCustomerAddress')
+            axios.get('/address/getAddressByCustomerId')
                 .then(function (response) {
                     console.log(response);
-                    app.addresses = response.data;
+                  addresslist.addresses = response.data;
                 })
                 .catch(function (error) {
                     console.log(error);

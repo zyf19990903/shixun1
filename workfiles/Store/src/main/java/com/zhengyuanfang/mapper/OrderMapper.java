@@ -1,6 +1,7 @@
 package com.zhengyuanfang.mapper;
 
 
+import com.github.pagehelper.Page;
 import com.zhengyuanfang.po.Order;
 
 public interface OrderMapper {
@@ -15,4 +16,6 @@ public interface OrderMapper {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+
+    Page<Order> selectByCustomerId(Integer customerId);
 }

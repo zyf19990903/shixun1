@@ -21,6 +21,12 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+    public Address getById(Integer addressId) {
+        Address address = addressMapper.selectByPrimaryKey(addressId);
+        return address;
+    }
+
+    @Override
     public Integer create(Address address) {
         addressMapper.insertSelective(address);
         Integer addressId = address.getAddressId();

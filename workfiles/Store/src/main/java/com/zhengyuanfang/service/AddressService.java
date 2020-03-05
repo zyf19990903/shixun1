@@ -12,4 +12,6 @@ public interface AddressService {
     void delete(Integer addressId);
 
     List<Address> getByCustomerId(Integer customerId);
+
+    Address getById(Integer addressId);
 }

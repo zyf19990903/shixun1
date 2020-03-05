@@ -3,6 +3,7 @@ package com.zhengyuanfang.controller;
 import com.zhengyuanfang.dto.in.AddressCreateInDTO;
 import com.zhengyuanfang.dto.in.AddressUpdateInDTO;
 import com.zhengyuanfang.dto.out.AddressListOutDTO;
+import com.zhengyuanfang.dto.out.AddressShowOutDTO;
 import com.zhengyuanfang.po.Address;
 import com.zhengyuanfang.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,19 @@ public class AddressController {
         }).collect(Collectors.toList());
 
         return addressListOutDTOS;
+    }
+
+    @GetMapping("/getById")
+    public AddressShowOutDTO getById(@RequestParam Integer addressId){
+        Address address = addressService.getById(addressId);
+        AddressShowOutDTO addressShowOutDTO = new AddressShowOutDTO();
+        addressShowOutDTO.setAddressId(address.getAddressId());
+        addressShowOutDTO.setTag(address.getTag());
+        addressShowOutDTO.setReceiverName(address.getReceiverName());
+        addressShowOutDTO.setReceiverMobile(address.getReceiverMobile());
+        addressShowOutDTO.setContent(address.getContent());
+
+        return addressShowOutDTO;
     }
 
     /*

@@ -55,4 +55,10 @@ public class ProductServiceImpl implements ProductService {
         Page<ProductListOutDTO> page = productMapper.findAll();
         return page;
     }
+
+    @Override
+    public Product getById(Integer productId) {
+        Product product = productMapper.selectByPrimaryKey(productId);
+        return product;
+    }
 }
