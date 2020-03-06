@@ -1,14 +1,16 @@
 package com.zhengyuanfang.service;
 
 
+import com.zhengyuanfang.dto.out.AddressListOutDTO;
+import com.zhengyuanfang.dto.out.AddressShowOutDTO;
 import com.zhengyuanfang.po.Address;
 
 import java.util.List;
 
 public interface AddressService {
 
-    Address getById(Integer addressId);
+    AddressShowOutDTO getById(Integer addressId);
 
-    List<Address> getByCustomerId(Integer customerId);
+    List<AddressListOutDTO> getByCustomerId(Integer customerId);
 
 }

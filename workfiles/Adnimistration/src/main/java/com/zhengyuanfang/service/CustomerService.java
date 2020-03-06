@@ -2,12 +2,15 @@ package com.zhengyuanfang.service;
 
 import com.github.pagehelper.Page;
 import com.zhengyuanfang.dto.in.CustomerSetStatusInDTO;
+import com.zhengyuanfang.dto.out.CustomerListOutDTO;
+import com.zhengyuanfang.dto.out.CustomerShowOutDTO;
+import com.zhengyuanfang.dto.out.PageOutDTO;
 import com.zhengyuanfang.po.Customer;
 
 public interface CustomerService {
-    Page<Customer> findAll(Integer pageNum);
+    PageOutDTO<CustomerListOutDTO> findAll(Integer pageNum);
 
-    Customer getById(Integer customerId);
+    CustomerShowOutDTO getById(Integer customerId);
 
     void setStatus(CustomerSetStatusInDTO customerSetStatusInDTO);
 }

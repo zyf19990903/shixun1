@@ -5,6 +5,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.zhengyuanfang.dto.out.OrderListOutDTO;
 import com.zhengyuanfang.dto.out.OrderShowOutDTO;
+import com.zhengyuanfang.dto.out.PageOutDTO;
 import com.zhengyuanfang.mapper.CustomerMapper;
 import com.zhengyuanfang.mapper.OrderDetailMapper;
 import com.zhengyuanfang.mapper.OrderMapper;
@@ -31,10 +32,15 @@ public class OrderServiceImpl implements OrderService {
     private CustomerMapper customerMapper;
 
     @Override
-    public Page<OrderListOutDTO> findAll(Integer pageNum) {
+    public PageOutDTO<OrderListOutDTO> findAll(Integer pageNum) {
         PageHelper.startPage(pageNum, 10);
         Page<OrderListOutDTO> page = orderMapper.findAll();
-        return page;
+        PageOutDTO<OrderListOutDTO> pageOutDTO = new PageOutDTO<>();
+        pageOutDTO.setTotal(page.getTotal());
+        pageOutDTO.setPageSize(page.getPageSize());
+        pageOutDTO.setPageNum(page.getPageNum());
+        pageOutDTO.setList(page);
+        return pageOutDTO;
     }
 
     @Override

@@ -33,26 +33,7 @@ public class CustomerController {
     @GetMapping("/list")
     public PageOutDTO<CustomerListOutDTO> findAll(CustomerSearchInDTO customerSearchInDTO,
                                                  @RequestParam(required = false,defaultValue = "1") Integer pageNum){
-        Page<Customer> page = customerService.findAll(pageNum);
-        List<CustomerListOutDTO> customerListOutDTOS = page.stream().map(customer -> {
-            CustomerListOutDTO customerListOutDTO = new CustomerListOutDTO();
-            customerListOutDTO.setCustomerId(customer.getCustomerId());
-            customerListOutDTO.setUsername(customer.getUsername());
-            customerListOutDTO.setRealName(customer.getRealName());
-            customerListOutDTO.setMobile(customer.getMobile());
-            customerListOutDTO.setEmail(customer.getEmail());
-            customerListOutDTO.setStatus(customer.getStatus());
-            customerListOutDTO.setCreateTimestamp(customer.getCreateTime().getTime());
-            return customerListOutDTO;
-        }).collect(Collectors.toList());
-
-        PageOutDTO<CustomerListOutDTO> pageOutDTO = new PageOutDTO<>();
-
-        pageOutDTO.setTotal(page.getTotal());
-        pageOutDTO.setPageSize(page.getPageSize());
-        pageOutDTO.setPageNum(page.getPageNum());
-        pageOutDTO.setList(customerListOutDTOS);
-
+        PageOutDTO<CustomerListOutDTO> pageOutDTO = customerService.findAll(pageNum);
         return pageOutDTO;
     }
 
@@ -61,26 +42,7 @@ public class CustomerController {
      */
     @GetMapping("/show")
     public CustomerShowOutDTO getById(@RequestParam Integer customerId){
-        Customer customer = customerService.getById(customerId);
-
-        CustomerShowOutDTO customerShowOutDTO = new CustomerShowOutDTO();
-        customerShowOutDTO.setCustomerId(customerId);
-        customerShowOutDTO.setUsername(customer.getUsername());
-        customerShowOutDTO.setRealName(customer.getRealName());
-        customerShowOutDTO.setMobile(customer.getMobile());
-        customerShowOutDTO.setEmail(customer.getEmail());
-        customerShowOutDTO.setAvatarUrl(customer.getAvatarUrl());
-        customerShowOutDTO.setStatus(customer.getStatus());
-        customerShowOutDTO.setRewordPoints(customer.getRewordPoints());
-        customerShowOutDTO.setNewsSubscribed(customer.getNewsSubscribed());
-        customerShowOutDTO.setCreateTimestamp(customer.getCreateTime().getTime());
-        customerShowOutDTO.setDefaultAddressId(customer.getDefaultAddressId());
-
-        Address defaultAddress = addressService.getById(customer.getDefaultAddressId());
-        if (defaultAddress != null){
-            customerShowOutDTO.setDefaultAddress(defaultAddress.getContent());
-        }
-
+        CustomerShowOutDTO customerShowOutDTO = customerService.getById(customerId);
         return customerShowOutDTO;
     }
 

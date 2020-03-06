@@ -23,16 +23,7 @@ public class AddressController {
     */
     @GetMapping("/getListByCustomerId")
     public List<AddressListOutDTO> getListByCustomerId(@RequestParam Integer customerId){
-        List<Address> addresses = addressService.getByCustomerId(customerId);
-        List<AddressListOutDTO> addressListOutDTOS = addresses.stream().map(address -> {
-            AddressListOutDTO addressListOutDTO = new AddressListOutDTO();
-            addressListOutDTO.setAddressId(address.getAddressId());
-            addressListOutDTO.setReceiverName(address.getReceiverName());
-            addressListOutDTO.setReceiverMobile(address.getReceiverMobile());
-            addressListOutDTO.setContent(address.getContent());
-            addressListOutDTO.setTag(address.getTag());
-            return addressListOutDTO;
-        }).collect(Collectors.toList());
+        List<AddressListOutDTO> addressListOutDTOS = addressService.getByCustomerId(customerId);
         return addressListOutDTOS;
     }
 
@@ -43,13 +34,7 @@ public class AddressController {
      */
     @GetMapping("/show")
     public AddressShowOutDTO getById(@RequestParam Integer addressId){
-        Address address = addressService.getById(addressId);
-        AddressShowOutDTO addressShowOutDTO = new AddressShowOutDTO();
-        addressShowOutDTO.setAddressId(address.getAddressId());
-        addressShowOutDTO.setReceiverName(address.getReceiverName());
-        addressShowOutDTO.setReceiverMobile(address.getReceiverMobile());
-        addressShowOutDTO.setContent(address.getContent());
-        addressShowOutDTO.setTag(address.getTag());
+        AddressShowOutDTO addressShowOutDTO = addressService.getById(addressId);
         return addressShowOutDTO;
     }
 }
