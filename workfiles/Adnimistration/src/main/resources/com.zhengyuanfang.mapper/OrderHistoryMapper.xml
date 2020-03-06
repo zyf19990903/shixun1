@@ -31,7 +31,7 @@
     values (#{orderId,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=TINYINT}, 
       #{comment,jdbcType=VARCHAR}, #{customerNotified,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.zhengyuanfang.po.OrderHistory">
+  <insert id="insertSelective" parameterType="com.zhengyuanfang.po.OrderHistory"  useGeneratedKeys="true" keyProperty="orderHistoryId">
     <selectKey keyProperty="orderHistoryId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>

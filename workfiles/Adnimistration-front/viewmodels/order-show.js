@@ -17,6 +17,7 @@ var ordershow = new Vue({
         invoicePrice: '',
         comment: '',
         orderProducts: [],
+        orderHistories: [],
         orderStatuses: [
             { value: 0, label: '待处理' },
             { value: 1, label: '处理中' },
@@ -31,7 +32,10 @@ var ordershow = new Vue({
             { value: 10, label: '完成' },
             { value: 11, label: '待评价' },
             { value: 12, label: '已评价' }
-        ]
+        ],
+        createHistoryOrderStatus: '',
+        createHistoryCustomerNotified: false,
+        createHistoryComment: ''
     },
     mounted() {
          var url = new URL(location.href);
@@ -71,6 +75,28 @@ var ordershow = new Vue({
                 .catch(function (error) {
                     console.log(error);
                 });
-        }
+        },
+      handleCreateOrderHistoryClick() {
+        this.createOrderHistory();
+      },
+      createOrderHistory() {
+        axios.post('/orderhistory/create', {
+          orderId: this.orderId,
+          orderStatus: this.createHistoryOrderStatus,
+          comment: this.createHistoryComment,
+          customerNotified: this.createHistoryCustomerNotified
+        })
+          .then(function (response) {
+            console.log(response);
+            alert('订单历史添加成功');
+            ordershow.createHistoryOrderStatus = '';
+            ordershow.createHistoryCustomerNotified = false;
+            ordershow.createHistoryComment = '';
+          })
+          .catch(function (error) {
+            console.log(error);
+            alert('订单历史添加失败');
+          });
+      }
     }
 })

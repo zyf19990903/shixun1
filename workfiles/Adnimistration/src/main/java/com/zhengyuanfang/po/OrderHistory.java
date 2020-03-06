@@ -6,7 +6,7 @@ import java.util.Date;
 public class OrderHistory implements Serializable {
     private Long orderHistoryId;
 
-    private Integer orderId;
+    private Long orderId;
 
     private Date time;
 
@@ -26,11 +26,11 @@ public class OrderHistory implements Serializable {
         this.orderHistoryId = orderHistoryId;
     }
 
-    public Integer getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 

@@ -11,6 +11,7 @@
 
 <body>
     <div id="ordershow">
+        <h4 align="center">订单详情</h4>
         订单Id：{{orderId}} <br>
         客户姓名：{{customerName}} <br>
         订单状态：{{status}} <br>
@@ -46,6 +47,13 @@
         <br>
 
 
+        <h4 align="center">添加订单历史</h4>
+        <el-select v-model="createHistoryOrderStatus" placeholder="请选择订单状态">
+            <el-option v-for="item in orderStatuses" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+        </el-select>
+        <br>
+        <br>
 
         <el-checkbox v-model="createHistoryCustomerNotified">通知客户</el-checkbox>
         <br>
@@ -54,6 +62,8 @@
         <el-input v-model="createHistoryComment" type="textarea" placeholder="请输入备注"></el-input>
         <br>
         <br>
+
+        <el-button type="primary" @click="handleCreateOrderHistoryClick">添加订单历史</el-button>
 
 
     </div>
