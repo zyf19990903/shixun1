@@ -38,7 +38,8 @@ public class OrderController {
      */
     @GetMapping("/show")
     public OrderShowOutDTO getById(@RequestParam Long orderId){
-        return null;
+        OrderShowOutDTO orderShowOutDTO = orderService.show(orderId);
+        return orderShowOutDTO;
     }
 
     /*
