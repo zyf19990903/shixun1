@@ -20,7 +20,8 @@ public class OrderHistoryController {
     */
     @GetMapping("/getListByOrderId")
     public List<OrderHistoryListOutDTO> getListByOrderId(@RequestParam Long orderId){
-        return null;
+        List<OrderHistoryListOutDTO> orderHistoryListOutDTOS = orderHistoryService.findByOrederId(orderId);
+        return orderHistoryListOutDTOS;
     }
     /*
      * 添加订单历史

@@ -45,6 +45,7 @@ var ordershow = new Vue({
             return;
         }
         this.getOrderById();
+        this.getHistoryByOrderId();
     },
     methods: {
         getOrderById() {
@@ -92,10 +93,26 @@ var ordershow = new Vue({
             ordershow.createHistoryOrderStatus = '';
             ordershow.createHistoryCustomerNotified = false;
             ordershow.createHistoryComment = '';
+            ordershow.getOrderById();
+            ordershow.getHistoryByOrderId();
           })
           .catch(function (error) {
             console.log(error);
             alert('订单历史添加失败');
+          });
+      },
+      getHistoryByOrderId() {
+        axios.get('/orderhistory/getListByOrderId', {
+          params: {
+            orderId: this.orderId
+          }
+        })
+          .then(function (response) {
+            console.log(response);
+            ordershow.orderHistories = response.data;
+          })
+          .catch(function (error) {
+            console.log(error);
           });
       }
     }

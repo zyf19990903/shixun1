@@ -46,6 +46,23 @@
         支付价：{{totalPrice + shipPrice}}<br>
         <br>
 
+        <h4 align="center">订单历史</h4>
+        <el-table :data="orderHistories" style="width: 100%">
+            <el-table-column prop="timestamp" label="时间">
+            </el-table-column>
+            <el-table-column prop="comment" label="备注">
+            </el-table-column>
+            <el-table-column prop="orderStatus" label="订单状态">
+            </el-table-column>
+            <el-table-column label="通知客户">
+                <template slot-scope="scope">
+                    {{scope.row.customerNotified}}
+                </template>
+            </el-table-column>
+            </el-table-column>
+        </el-table>
+
+
 
         <h4 align="center">添加订单历史</h4>
         <el-select v-model="createHistoryOrderStatus" placeholder="请选择订单状态">
