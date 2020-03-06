@@ -7,7 +7,7 @@ var shoppingCart = new Vue({
     totalPrice(){
       //遍历购物车里面的商品,计算此商品的总价
       var subTotalPrices = this.myShoppingCart.map(p =>{
-        return p.unitPrice * p.quantity;
+        return p.unitPrice * p.quantity * p.discount;
       })
       //相当于遍历刚刚计算的每个商品的总价，然后两两相加，直至到0
       var totalPrice = subTotalPrices.reduce((a,b) => a+b,0);
