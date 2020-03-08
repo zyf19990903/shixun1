@@ -1,10 +1,11 @@
 package com.zhengyuanfang.dto.out;
 
+import java.util.List;
+
 public class ReturnShowOutDTO {
     private Integer returnId;
     private Long orderId;
     private Long orderTimestamp;
-    private Integer customerId;
     private String customerName;
     private String mobile;
     private String email;
@@ -19,6 +20,8 @@ public class ReturnShowOutDTO {
     private Long createTimestamp;
     private Long updateTimestamp;
 
+    private List<ReturnHistoryListOutDTO> returnHistories;
+
     public Integer getReturnId() {
         return returnId;
     }
@@ -27,28 +30,12 @@ public class ReturnShowOutDTO {
         this.returnId = returnId;
     }
 
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
     public Long getOrderTimestamp() {
         return orderTimestamp;
     }
 
     public void setOrderTimestamp(Long orderTimestamp) {
         this.orderTimestamp = orderTimestamp;
-    }
-
-    public Integer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
     }
 
     public String getCustomerName() {
@@ -153,5 +140,21 @@ public class ReturnShowOutDTO {
 
     public void setUpdateTimestamp(Long updateTimestamp) {
         this.updateTimestamp = updateTimestamp;
+    }
+
+    public List<ReturnHistoryListOutDTO> getReturnHistories() {
+        return returnHistories;
+    }
+
+    public void setReturnHistories(List<ReturnHistoryListOutDTO> returnHistories) {
+        this.returnHistories = returnHistories;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 }

@@ -2,6 +2,8 @@ package com.zhengyuanfang.mapper;
 
 import com.zhengyuanfang.po.ReturnHistory;
 
+import java.util.List;
+
 public interface ReturnHistoryMapper {
     int deleteByPrimaryKey(Long returnHistoryId);
 
@@ -14,4 +16,6 @@ public interface ReturnHistoryMapper {
     int updateByPrimaryKeySelective(ReturnHistory record);
 
     int updateByPrimaryKey(ReturnHistory record);
+
+    List<ReturnHistory> findByReturnId(Integer returnId);
 }

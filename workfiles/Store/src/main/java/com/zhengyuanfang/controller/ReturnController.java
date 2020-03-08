@@ -35,7 +35,8 @@ public class ReturnController {
      */
     @GetMapping("/show")
     public ReturnShowOutDTO getById(@RequestParam Integer returnId){
-        return null;
+        ReturnShowOutDTO returnShowOutDTO = returnService.show(returnId);
+        return returnShowOutDTO;
     }
 
 
