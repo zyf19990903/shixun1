@@ -1,5 +1,6 @@
 package com.zhengyuanfang.mapper;
 
+import com.github.pagehelper.Page;
 import com.zhengyuanfang.po.Return;
 
 public interface ReturnMapper {
@@ -14,4 +15,6 @@ public interface ReturnMapper {
     int updateByPrimaryKeySelective(Return record);
 
     int updateByPrimaryKey(Return record);
+
+    Page<Return> findAll();
 }
