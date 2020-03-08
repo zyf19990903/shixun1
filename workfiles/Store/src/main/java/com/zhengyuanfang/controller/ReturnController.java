@@ -22,10 +22,12 @@ public class ReturnController {
     /*
      *模糊分页查询退货列表
      */
-    @GetMapping("/findAll")
+    @GetMapping("/list")
     public PageOutDTO<ReturnListOutDTO> search(ReturnSearchInDTO returnSearchInDTO,
-                                               @RequestParam Integer pageNum){
-        return null;
+                                               @RequestParam Integer pageNum,
+                                               @RequestAttribute Integer customerId){
+        PageOutDTO<ReturnListOutDTO> pageOutDTO = returnService.findAll(pageNum,customerId);
+        return pageOutDTO;
     }
 
     /*
