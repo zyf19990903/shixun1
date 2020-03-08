@@ -32,7 +32,8 @@ public class ReturnController {
      */
     @GetMapping("/show")
     public ReturnShowOutDTO getById(@RequestParam Integer returnId){
-        return null;
+        ReturnShowOutDTO returnShowOutDTO = returnService.getById(returnId);
+        return returnShowOutDTO;
     }
 
     /*
@@ -40,7 +41,7 @@ public class ReturnController {
      */
     @PostMapping("/update")
     public void updateAction(@RequestBody ReturnUpdateActionInDTO returnUpdateActionInDTO){
-
+        returnService.update(returnUpdateActionInDTO);
     }
 
 }

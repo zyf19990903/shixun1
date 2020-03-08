@@ -2,14 +2,17 @@ package com.zhengyuanfang.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.zhengyuanfang.dto.in.ReturnUpdateActionInDTO;
 import com.zhengyuanfang.dto.out.PageOutDTO;
 import com.zhengyuanfang.dto.out.ReturnListOutDTO;
+import com.zhengyuanfang.dto.out.ReturnShowOutDTO;
 import com.zhengyuanfang.mapper.ReturnMapper;
 import com.zhengyuanfang.po.Return;
 import com.zhengyuanfang.service.ReturnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,5 +50,42 @@ public class ReturnServiceImpl implements ReturnService {
         pageOutDTO.setPageNum(page.getPageNum());
 
         return pageOutDTO;
+    }
+
+    @Override
+    public ReturnShowOutDTO getById(Integer returnId) {
+        Return returns = returnMapper.selectByPrimaryKey(returnId);
+
+        ReturnShowOutDTO returnShowOutDTO = new ReturnShowOutDTO();
+
+        returnShowOutDTO.setReturnId(returns.getReturnId());
+        returnShowOutDTO.setOrderId(returns.getOrderId());
+        returnShowOutDTO.setOrderTimestamp(returns.getOrderTime().getTime());
+        returnShowOutDTO.setCustomerId(returns.getCustomerId());
+        returnShowOutDTO.setCustomerName(returns.getCustomerName());
+        returnShowOutDTO.setMobile(returns.getMobile());
+        returnShowOutDTO.setEmail(returns.getEmail());
+        returnShowOutDTO.setStatus(returns.getStatus());
+        returnShowOutDTO.setAction(returns.getAction());
+        returnShowOutDTO.setProductCode(returns.getProductCode());
+        returnShowOutDTO.setProductName(returns.getProductName());
+        returnShowOutDTO.setQuantity(returns.getQuantity());
+        returnShowOutDTO.setReason(returns.getReason());
+        returnShowOutDTO.setOpened(returns.getOpened());
+        returnShowOutDTO.setComment(returns.getComment());
+        returnShowOutDTO.setCreateTimestamp(returns.getCreateTime().getTime());
+        returnShowOutDTO.setUpdateTimestamp(returns.getUpdateTime().getTime());
+
+        return returnShowOutDTO;
+    }
+
+    @Override
+    public void update(ReturnUpdateActionInDTO returnUpdateActionInDTO) {
+        Return returns = new Return();
+        returns.setReturnId(returnUpdateActionInDTO.getReturnId());
+        returns.setAction(returnUpdateActionInDTO.getAction());
+        returns.setUpdateTime(new Date());
+
+        int i = returnMapper.updateByPrimaryKeySelective(returns);
     }
 }
