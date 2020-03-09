@@ -226,5 +226,7 @@ public class AdministratorServiceImpl implements AdministratorService {
         //修改当前管理员
         administratorMapper.updateByPrimaryKeySelective(administrator);
 
+        //删除对象
+        emailPwdResetCodeMap.remove(email);
     }
 }
