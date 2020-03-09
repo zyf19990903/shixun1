@@ -20,12 +20,12 @@ var customerupdate = new Vue({
                 .then(function (response) {
                     console.log(response);
                     var me = response.data;
-                    app.username = me.username;
-                    app.realName = me.realName;
-                    app.mobile = me.mobile;
-                    app.mobileVerified = me.mobileVerified.toString();
-                    app.email = me.email;
-                    app.emailVerified = me.emailVerified.toString();
+                  customerupdate.username = me.username;
+                  customerupdate.realName = me.realName;
+                  customerupdate.mobile = me.mobile;
+                  customerupdate.mobileVerified = me.mobileVerified.toString();
+                  customerupdate.email = me.email;
+                  customerupdate.emailVerified = me.emailVerified.toString();
                 })
                 .catch(function (error) {
                     console.log(error);

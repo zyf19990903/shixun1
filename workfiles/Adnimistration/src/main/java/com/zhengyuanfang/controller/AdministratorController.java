@@ -12,10 +12,17 @@ import com.zhengyuanfang.po.Administrator;
 import com.zhengyuanfang.service.AdministratorService;
 import com.zhengyuanfang.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.DatatypeConverter;
+import java.security.SecureRandom;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,8 +32,7 @@ public class AdministratorController {
     @Autowired
     private AdministratorService administratorService;
 
-    @Autowired
-    private JWTUtil jwtUtil;
+    private Map<String, String> emailPwdResetCodeMap = new HashMap<>();
 
     /*
     *管理员登录
@@ -60,8 +66,10 @@ public class AdministratorController {
      *管理员得到重置代码
      */
     @GetMapping("/getPwdResetCode")
-    public String getPwdResetCode(@RequestParam String email){
-        return null;
+    public void getPwdResetCode(@RequestParam String email) throws ClientException {
+        //获取重置码
+        String hex = administratorService.getByEmail(email);
+        emailPwdResetCodeMap.put(email, hex);
     }
 
     /*

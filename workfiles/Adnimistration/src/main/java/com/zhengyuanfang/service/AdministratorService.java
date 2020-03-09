@@ -1,14 +1,11 @@
 package com.zhengyuanfang.service;
 
-import com.github.pagehelper.Page;
 import com.zhengyuanfang.dto.in.AdministratorCreateInDTO;
 import com.zhengyuanfang.dto.in.AdministratorLoginInDTO;
 import com.zhengyuanfang.dto.in.AdministratorUpdateInDTO;
 import com.zhengyuanfang.dto.in.AdministratorUpdateProfileInDTO;
 import com.zhengyuanfang.dto.out.*;
 import com.zhengyuanfang.exception.ClientException;
-import com.zhengyuanfang.po.Administrator;
-import org.springframework.web.bind.annotation.RequestAttribute;
 
 import java.util.List;
 
@@ -31,4 +28,6 @@ public interface AdministratorService {
     AdministratorShowOutDTO show(Integer administratorId);
 
     void update(AdministratorUpdateInDTO administratorUpdateInDTO);
+
+    String getByEmail(String email) throws ClientException;
 }

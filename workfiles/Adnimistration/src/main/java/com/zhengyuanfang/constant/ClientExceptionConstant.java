@@ -14,4 +14,6 @@ public class ClientExceptionConstant {
     public static final String ADMINISTRATOR_USERNAME_NOT_EXIST_ERRMSG = "administrator username not exist";
     public static final String ADNINISTRATOR_PASSWORD_INVALID_ERRCODE = "0102";
     public static final String ADNINISTRATOR_PASSWORD_INVALID_ERRMSG = "administrator password invalid";
+    public static final String ADMINISTRATOR_EMAIL_NOT_EXIST_ERRCODE = "0107";
+    public static final String ADMINISTRATOR_EMAIL_NOT_EXIST_ERRMSG = "administrator email not exist";
 }

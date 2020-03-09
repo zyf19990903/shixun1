@@ -15,9 +15,13 @@ import com.zhengyuanfang.mapper.AdministratorMapper;
 import com.zhengyuanfang.po.Administrator;
 import com.zhengyuanfang.service.AdministratorService;
 import com.zhengyuanfang.util.JWTUtil;
+import com.zhengyuanfang.util.MailBean;
+import com.zhengyuanfang.util.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.bind.DatatypeConverter;
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +34,12 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Autowired
     private JWTUtil jwtUtil;
+
+    @Autowired
+    private SecureRandom secureRandom;
+
+    @Autowired
+    private MailService mailService;
 
     @Override
     public AdministratorLoginOutDTO getByUsername(AdministratorLoginInDTO administratorLoginInDTO) throws ClientException {
@@ -150,5 +160,28 @@ public class AdministratorServiceImpl implements AdministratorService {
             administrator.setEncryptedPassword(bcryptHashString);
         }
         administratorMapper.updateByPrimaryKeySelective(administrator);
+    }
+
+    @Override
+    public String getByEmail(String email) throws ClientException {
+        Administrator administrator = administratorMapper.selectByEmail(email);
+        if (administrator == null){
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_EMAIL_NOT_EXIST_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_EMAIL_NOT_EXIST_ERRMSG);
+        }
+        //生成随机重置码
+        byte[] bytes = secureRandom.generateSeed(3);
+        String hex = DatatypeConverter.printHexBinary(bytes);
+
+        MailBean mailBean = new MailBean();
+        mailBean.setReceiver(email);
+        mailBean.setSubject("jcart管理端管理员密码重置");
+        mailBean.setContent(hex);
+        try {
+            mailService.sendSimpleMail(mailBean);
+            return hex;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "发送失败";
+        }
     }
 }
