@@ -4,10 +4,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.zhengyuanfang.constant.ClientExceptionConstant;
-import com.zhengyuanfang.dto.in.AdministratorCreateInDTO;
-import com.zhengyuanfang.dto.in.AdministratorLoginInDTO;
-import com.zhengyuanfang.dto.in.AdministratorUpdateInDTO;
-import com.zhengyuanfang.dto.in.AdministratorUpdateProfileInDTO;
+import com.zhengyuanfang.dto.in.*;
 import com.zhengyuanfang.dto.out.*;
 import com.zhengyuanfang.enumeration.AdministratorStatus;
 import com.zhengyuanfang.exception.ClientException;
@@ -24,6 +21,7 @@ import javax.xml.bind.DatatypeConverter;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,7 +52,7 @@ public class AdministratorServiceImpl implements AdministratorService {
             AdministratorLoginOutDTO administratorLoginOutDTO = jwtUtil.issueToken(administrator);
             return administratorLoginOutDTO;
         }else {
-            throw new ClientException(ClientExceptionConstant.ADNINISTRATOR_PASSWORD_INVALID_ERRCODE, ClientExceptionConstant.ADNINISTRATOR_PASSWORD_INVALID_ERRMSG);
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_PASSWORD_INVALID_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_PASSWORD_INVALID_ERRMSG);
         }
     }
 
@@ -183,5 +181,50 @@ public class AdministratorServiceImpl implements AdministratorService {
             e.printStackTrace();
             return "发送失败";
         }
+    }
+
+    @Override
+    public void restPwd(AdministratorResetPwdInDTO administratorResetPwdInDTO, Map<String, String> emailPwdResetCodeMap) throws ClientException {
+        String email = administratorResetPwdInDTO.getEmail();
+        if (email == null) {
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_PWDRESET_EMAIL_NONE_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_PWDRESET_EMAIL_NONE_ERRMSG);
+        }
+
+        //获取邮箱里面的重置码
+        String innerResetCode = emailPwdResetCodeMap.get(email);
+        if (innerResetCode == null) {
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_PWDRESET_INNER_RESETCODE_NONE_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_PWDRESET_INNER_RESETCODE_NONE_ERRMSG);
+        }
+
+        //获取页面重置码
+        String outerResetCode = administratorResetPwdInDTO.getResetCode();
+        if (outerResetCode == null) {
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_PWDRESET_OUTER_RESETCODE_NONE_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_PWDRESET_OUTER_RESETCODE_NONE_ERRMSG);
+        }
+
+        //比较重置码是否一致
+        if (!outerResetCode.equalsIgnoreCase(innerResetCode)){
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_PWDRESET_RESETCODE_INVALID_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_PWDRESET_RESETCODE_INVALID_ERRMSG);
+        }
+
+        //获取当前管理员信息
+        Administrator administrator = administratorMapper.selectByEmail(email);
+        if (administrator == null){
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_EMAIL_NOT_EXIST_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_EMAIL_NOT_EXIST_ERRMSG);
+        }
+
+        //获取新的密码
+        String newPwd = administratorResetPwdInDTO.getNewPwd();
+        if (newPwd == null){
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_NEWPWD_NOT_EXIST_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_NEWPWD_NOT_EXIST_ERRMSG);
+        }
+
+        //重新加密 新密码
+        String bcryptHashString = BCrypt.withDefaults().hashToString(12, newPwd.toCharArray());
+        administrator.setEncryptedPassword(bcryptHashString);
+
+        //修改当前管理员
+        administratorMapper.updateByPrimaryKeySelective(administrator);
+
     }
 }

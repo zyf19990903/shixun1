@@ -76,8 +76,8 @@ public class AdministratorController {
      *管理员重置密码
      */
     @PostMapping("/resetPwd")
-    public void resetPwd(@RequestBody AdministratorResetPwdInDTO administratorResetPwdInDTO){
-
+    public void resetPwd(@RequestBody AdministratorResetPwdInDTO administratorResetPwdInDTO) throws ClientException {
+       administratorService.restPwd(administratorResetPwdInDTO,emailPwdResetCodeMap);
     }
 
     /*

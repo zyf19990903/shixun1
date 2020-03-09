@@ -1,13 +1,11 @@
 package com.zhengyuanfang.service;
 
-import com.zhengyuanfang.dto.in.AdministratorCreateInDTO;
-import com.zhengyuanfang.dto.in.AdministratorLoginInDTO;
-import com.zhengyuanfang.dto.in.AdministratorUpdateInDTO;
-import com.zhengyuanfang.dto.in.AdministratorUpdateProfileInDTO;
+import com.zhengyuanfang.dto.in.*;
 import com.zhengyuanfang.dto.out.*;
 import com.zhengyuanfang.exception.ClientException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AdministratorService {
 
@@ -30,4 +28,6 @@ public interface AdministratorService {
     void update(AdministratorUpdateInDTO administratorUpdateInDTO);
 
     String getByEmail(String email) throws ClientException;
+
+    void restPwd(AdministratorResetPwdInDTO administratorResetPwdInDTO, Map<String, String> emailPwdResetCodeMap) throws ClientException;
 }
