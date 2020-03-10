@@ -2,6 +2,7 @@ package com.zhengyuanfang.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.zhengyuanfang.dto.in.CustomerSearchInDTO;
 import com.zhengyuanfang.dto.in.CustomerSetStatusInDTO;
 import com.zhengyuanfang.dto.out.CustomerListOutDTO;
 import com.zhengyuanfang.dto.out.CustomerShowOutDTO;
@@ -27,9 +28,15 @@ public class CustomerServiceImpl implements CustomerService {
     private AddressMapper addressMapper;
 
     @Override
-    public PageOutDTO<CustomerListOutDTO> findAll(Integer pageNum) {
+    public PageOutDTO<CustomerListOutDTO> findAll(Integer pageNum, CustomerSearchInDTO customerSearchInDTO) {
         PageHelper.startPage(pageNum, 10);
-        Page<Customer> page = customerMapper.findAll();
+        Page<Customer> page = customerMapper.findAll(
+                customerSearchInDTO.getEmail(),
+                customerSearchInDTO.getMobile(),
+                customerSearchInDTO.getRealName(),
+                customerSearchInDTO.getStatus(),
+                customerSearchInDTO.getUsername()
+        );
 
         List<CustomerListOutDTO> customerListOutDTOS = page.stream().map(customer -> {
             CustomerListOutDTO customerListOutDTO = new CustomerListOutDTO();

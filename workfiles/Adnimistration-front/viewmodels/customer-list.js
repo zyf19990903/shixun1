@@ -7,7 +7,12 @@ var customerlist = new Vue({
             { value: 0, label: '禁用' },
             { value: 1, label: '启用' },
             { value: 2, label: '不安全' }
-        ]
+        ],
+      username: '',
+      realName: '',
+      mobile: '',
+      email: '',
+      selectedStatus: ''
     },
     mounted() {
         this.findAll();
@@ -23,7 +28,12 @@ var customerlist = new Vue({
       findAll() {
             axios.get('/customer/list', {
                 params: {
-                    pageNum: this.pageNum
+                  username: this.username,
+                  realName: this.realName,
+                  mobile: this.mobile,
+                  email: this.email,
+                  status: this.selectedStatus,
+                  pageNum: this.pageNum
                 }
             })
                 .then(function (response) {
@@ -34,6 +44,17 @@ var customerlist = new Vue({
                     console.log(error);
                 });
         },
+      handleSearchClick(){
+          this.pageNum=1;
+          this.findAll()
+      },
+      handleClearClick(){
+        this.username="",
+          this.realName="",
+          this.mobile="",
+           this.email="",
+          this.selectedStatus=""
+      },
         updateCustomerStatus(customerId, status) {
             axios.post('/customer/setStatus', {
                 customerId: customerId,

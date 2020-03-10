@@ -33,7 +33,7 @@ public class CustomerController {
     @GetMapping("/list")
     public PageOutDTO<CustomerListOutDTO> findAll(CustomerSearchInDTO customerSearchInDTO,
                                                  @RequestParam(required = false,defaultValue = "1") Integer pageNum){
-        PageOutDTO<CustomerListOutDTO> pageOutDTO = customerService.findAll(pageNum);
+        PageOutDTO<CustomerListOutDTO> pageOutDTO = customerService.findAll(pageNum,customerSearchInDTO);
         return pageOutDTO;
     }
 
