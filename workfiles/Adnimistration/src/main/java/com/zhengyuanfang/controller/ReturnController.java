@@ -23,7 +23,7 @@ public class ReturnController {
     @GetMapping("/list")
     public PageOutDTO<ReturnListOutDTO> search(ReturnSearchInDTO returnSearchInDTO,
                                                @RequestParam(required = false, defaultValue = "1") Integer pageNum){
-        PageOutDTO<ReturnListOutDTO> pageOutDTO = returnService.findAll(pageNum);
+        PageOutDTO<ReturnListOutDTO> pageOutDTO = returnService.findAll(pageNum,returnSearchInDTO);
         return pageOutDTO;
     }
 

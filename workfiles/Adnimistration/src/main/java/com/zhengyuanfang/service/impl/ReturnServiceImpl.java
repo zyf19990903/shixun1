@@ -2,6 +2,7 @@ package com.zhengyuanfang.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.zhengyuanfang.dto.in.ReturnSearchInDTO;
 import com.zhengyuanfang.dto.in.ReturnUpdateActionInDTO;
 import com.zhengyuanfang.dto.out.PageOutDTO;
 import com.zhengyuanfang.dto.out.ReturnListOutDTO;
@@ -23,9 +24,17 @@ public class ReturnServiceImpl implements ReturnService {
     private ReturnMapper returnMapper;
 
     @Override
-    public PageOutDTO<ReturnListOutDTO> findAll(Integer pageNum) {
+    public PageOutDTO<ReturnListOutDTO> findAll(Integer pageNum, ReturnSearchInDTO returnSearchInDTO) {
         PageHelper.startPage(pageNum,5);
-        Page<Return> page = returnMapper.findAll();
+        Page<Return> page = returnMapper.findAll(
+                returnSearchInDTO.getReturnId(),
+                returnSearchInDTO.getOrderId(),
+                returnSearchInDTO.getStartTimestamp() == null ? null : new Date(returnSearchInDTO.getStartTimestamp()),
+                returnSearchInDTO.getEndTimestamp() == null ? null : new Date(returnSearchInDTO.getEndTimestamp()),
+                returnSearchInDTO.getStatus(),
+                returnSearchInDTO.getProductCode(),
+                returnSearchInDTO.getCustomerName(),
+                returnSearchInDTO.getProductName());
 
         List<ReturnListOutDTO> returnListOutDTOS = page.stream().map(returns ->{
             ReturnListOutDTO returnListOutDTO = new ReturnListOutDTO();
