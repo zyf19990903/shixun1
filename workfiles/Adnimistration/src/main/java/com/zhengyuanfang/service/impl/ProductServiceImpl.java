@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.zhengyuanfang.dto.in.ProductCreateInDTO;
+import com.zhengyuanfang.dto.in.ProductSearchInDTO;
 import com.zhengyuanfang.dto.in.ProductUpdateInDTO;
 import com.zhengyuanfang.dto.out.ProductListOutDTO;
 import com.zhengyuanfang.dto.out.ProductShowOutDTO;
@@ -12,7 +13,6 @@ import com.zhengyuanfang.mapper.ProductMapper;
 import com.zhengyuanfang.po.Product;
 import com.zhengyuanfang.po.ProductDetail;
 import com.zhengyuanfang.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,9 +27,13 @@ public class ProductServiceImpl implements ProductService {
     private ProductDetailMapper productDetailMapper;
 
     @Override
-    public Page<ProductListOutDTO> findAll(Integer pageNum) {
+    public Page<ProductListOutDTO> findAll(Integer pageNum, ProductSearchInDTO productSearchInDTO) {
         PageHelper.startPage(pageNum,5);
-        Page<ProductListOutDTO> page = productMapper.findAll();
+        Page<ProductListOutDTO> page = productMapper.findAll(productSearchInDTO.getProductCode(),
+                productSearchInDTO.getStatus(),
+                productSearchInDTO.getStockQuantity(),
+                productSearchInDTO.getPrice(),
+                productSearchInDTO.getProductName());
         return page;
     }
 
