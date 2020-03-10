@@ -28,15 +28,6 @@ public class CustomerStoreController {
     @Autowired
     private JWTUtil jwtUtil;
 
-    @Autowired
-    private SecureRandom secureRandom;
-
-//    @Autowired
-//    private JavaMailSender mailSender;
-
-    @Value("${spring.mail.username}")
-    private String fromEmail;
-
     private HashMap<String, String> emailPwdResetCodeMap = new HashMap();
 
     /*
@@ -125,19 +116,9 @@ public class CustomerStoreController {
      */
     @GetMapping("/getPwdResetCode")
     public void getPwdResetCode(@RequestParam String email) throws ClientException {
-        Customer customer = customerService.getByEmail(email);
-        if (customer == null){
-            throw new ClientException(ClientExceptionConstant.CUSTOMER_USERNAME_NOT_EXIST_ERRCODE, ClientExceptionConstant.CUSTOMER_USERNAME_NOT_EXIST_ERRMSG);
-        }
-        byte[] bytes = secureRandom.generateSeed(3);
-        String hex = DatatypeConverter.printHexBinary(bytes);
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(fromEmail);
-        message.setTo(email);
-        message.setSubject("jcart重置密码");
-        message.setText(hex);
-       // mailSender.send(message);
-        emailPwdResetCodeMap.put("PwdResetCode"+email, hex);
+        //获取重置码
+        String hex = customerService.getByEmail(email);
+        emailPwdResetCodeMap.put(email, hex);
     }
 
     /*

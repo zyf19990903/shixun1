@@ -1,14 +1,21 @@
 package com.zhengyuanfang.service.impl;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.zhengyuanfang.constant.ClientExceptionConstant;
 import com.zhengyuanfang.dto.in.CustomerRegisterInDto;
 import com.zhengyuanfang.enumeration.CustomerStatus;
+import com.zhengyuanfang.exception.ClientException;
 import com.zhengyuanfang.mapper.CustomerMapper;
 import com.zhengyuanfang.po.Customer;
 import com.zhengyuanfang.service.CustomerService;
+import com.zhengyuanfang.util.JWTUtil;
+import com.zhengyuanfang.util.MailBean;
+import com.zhengyuanfang.util.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.bind.DatatypeConverter;
+import java.security.SecureRandom;
 import java.util.Date;
 
 @Service
@@ -16,6 +23,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerMapper customerMapper;
+
+    @Autowired
+    private JWTUtil jwtUtil;
+
+    @Autowired
+    private SecureRandom secureRandom;
+
+    @Autowired
+    private MailService mailService;
 
     @Override
     public Integer register(CustomerRegisterInDto customerRegisterInDTO) {
@@ -61,8 +77,25 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getByEmail(String email) {
+    public String getByEmail(String email) throws ClientException {
         Customer customer = customerMapper.selectByEmail(email);
-        return customer;
+        if (customer == null) {
+            throw new ClientException(ClientExceptionConstant.CUSTOMER_USERNAME_NOT_EXIST_ERRCODE, ClientExceptionConstant.CUSTOMER_USERNAME_NOT_EXIST_ERRMSG);
+        }
+    //生成随机重置码
+        byte[] bytes = secureRandom.generateSeed(3);
+        String hex = DatatypeConverter.printHexBinary(bytes);
+
+        MailBean mailBean = new MailBean();
+        mailBean.setReceiver(email);
+        mailBean.setSubject("jcart管理端管理员密码重置");
+        mailBean.setContent(hex);
+        try {
+            mailService.sendSimpleMail(mailBean);
+            return hex;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "发送失败";
+        }
     }
 }

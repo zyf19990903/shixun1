@@ -1,6 +1,7 @@
 package com.zhengyuanfang.service;
 
 import com.zhengyuanfang.dto.in.CustomerRegisterInDto;
+import com.zhengyuanfang.exception.ClientException;
 import com.zhengyuanfang.po.Customer;
 
 public interface CustomerService {
@@ -12,5 +13,5 @@ public interface CustomerService {
 
     void update(Customer customer);
 
-    Customer getByEmail(String email);
+    String getByEmail(String email) throws ClientException;
 }
