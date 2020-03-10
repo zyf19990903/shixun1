@@ -125,8 +125,8 @@ public class CustomerStoreController {
      *用户重置密码
      */
     @PostMapping("/resetPwd")
-    public void resetPwd(@RequestBody CustomerResetPwdInDTO customerResetPwdInDTO){
-
+    public void resetPwd(@RequestBody CustomerResetPwdInDTO customerResetPwdInDTO) throws ClientException {
+        customerService.restPwd(customerResetPwdInDTO,emailPwdResetCodeMap);
     }
 
 }

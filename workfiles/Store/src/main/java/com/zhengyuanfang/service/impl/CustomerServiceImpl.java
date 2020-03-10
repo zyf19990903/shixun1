@@ -3,6 +3,7 @@ package com.zhengyuanfang.service.impl;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.zhengyuanfang.constant.ClientExceptionConstant;
 import com.zhengyuanfang.dto.in.CustomerRegisterInDto;
+import com.zhengyuanfang.dto.in.CustomerResetPwdInDTO;
 import com.zhengyuanfang.enumeration.CustomerStatus;
 import com.zhengyuanfang.exception.ClientException;
 import com.zhengyuanfang.mapper.CustomerMapper;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.xml.bind.DatatypeConverter;
 import java.security.SecureRandom;
 import java.util.Date;
+import java.util.HashMap;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -97,5 +99,41 @@ public class CustomerServiceImpl implements CustomerService {
             e.printStackTrace();
             return "发送失败";
         }
+    }
+
+    @Override
+    public void restPwd(CustomerResetPwdInDTO customerResetPwdInDTO, HashMap<String, String> emailPwdResetCodeMap) throws ClientException {
+        String email = customerResetPwdInDTO.getEmail();
+        if (email == null) {
+            throw new ClientException(ClientExceptionConstant.CUSTOMER_PWDRESET_EMAIL_NONE_ERRCODE, ClientExceptionConstant.CUSTOMER_PWDRESET_EMAIL_NONE_ERRMSG);
+        }
+        String innerResetCode = emailPwdResetCodeMap.get(email);
+        if (innerResetCode == null) {
+            throw new ClientException(ClientExceptionConstant.CUSTOMER_PWDRESET_INNER_RESETCODE_NONE_ERRCODE, ClientExceptionConstant.CUSTOMER_PWDRESET_INNER_RESETCODE_NONE_ERRMSG);
+        }
+        String outerResetCode = customerResetPwdInDTO.getResetCode();
+        if (outerResetCode == null) {
+            throw new ClientException(ClientExceptionConstant.CUSTOMER_PWDRESET_OUTER_RESETCODE_NONE_ERRCODE, ClientExceptionConstant.CUSTOMER_PWDRESET_OUTER_RESETCODE_NONE_ERRMSG);
+        }
+        if (!outerResetCode.equalsIgnoreCase(innerResetCode)){
+            throw new ClientException(ClientExceptionConstant.CUSTOMER_PWDRESET_RESETCODE_INVALID_ERRCODE, ClientExceptionConstant.CUSTOMER_PWDRESET_RESETCODE_INVALID_ERRMSG);
+        }
+        Customer customer = customerMapper.selectByEmail(email);
+        if (customer == null){
+            throw new ClientException(ClientExceptionConstant.CUSTOMER_EMAIL_NOT_EXIST_ERRCODE, ClientExceptionConstant.CUSTOMER_EMAIL_NOT_EXIST_ERRMSG);
+        }
+
+        String newPwd = customerResetPwdInDTO.getNewPwd();
+        if (newPwd == null){
+            throw new ClientException(ClientExceptionConstant.CUSTOMER_NEWPWD_NOT_EXIST_ERRCODE, ClientExceptionConstant.CUSTOMER_NEWPWD_NOT_EXIST_ERRMSG);
+        }
+
+        //重新加密 新密码
+        String bcryptHashString = BCrypt.withDefaults().hashToString(12, newPwd.toCharArray());
+        customer.setEncryptedPassword(bcryptHashString);
+
+        customerMapper.updateByPrimaryKeySelective(customer);
+
+        emailPwdResetCodeMap.remove(email);
     }
 }
