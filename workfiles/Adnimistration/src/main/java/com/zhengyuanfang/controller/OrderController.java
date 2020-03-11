@@ -22,7 +22,7 @@ public class OrderController {
     @GetMapping("/list")
     public PageOutDTO<OrderListOutDTO> search(OrderSearchInDTO orderSearchInDTO,
                                               @RequestParam(required = false,defaultValue = "1") Integer pageNum){
-        PageOutDTO<OrderListOutDTO> pageOutDTO = orderService.findAll(pageNum);
+        PageOutDTO<OrderListOutDTO> pageOutDTO = orderService.findAll(orderSearchInDTO,pageNum);
         return pageOutDTO;
     }
 

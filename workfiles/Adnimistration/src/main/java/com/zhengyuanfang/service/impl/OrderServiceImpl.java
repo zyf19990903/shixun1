@@ -3,6 +3,7 @@ package com.zhengyuanfang.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.zhengyuanfang.dto.in.OrderSearchInDTO;
 import com.zhengyuanfang.dto.out.OrderListOutDTO;
 import com.zhengyuanfang.dto.out.OrderShowOutDTO;
 import com.zhengyuanfang.dto.out.PageOutDTO;
@@ -17,6 +18,7 @@ import com.zhengyuanfang.vo.OrderProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -32,9 +34,15 @@ public class OrderServiceImpl implements OrderService {
     private CustomerMapper customerMapper;
 
     @Override
-    public PageOutDTO<OrderListOutDTO> findAll(Integer pageNum) {
+    public PageOutDTO<OrderListOutDTO> findAll(OrderSearchInDTO orderSearchInDTO, Integer pageNum) {
         PageHelper.startPage(pageNum, 10);
-        Page<OrderListOutDTO> page = orderMapper.findAll();
+        Page<OrderListOutDTO> page = orderMapper.findAll(
+                orderSearchInDTO.getOrderId(),
+                orderSearchInDTO.getStatus(),
+                orderSearchInDTO.getTotalPrice(),
+                orderSearchInDTO.getCustomerName(),
+                orderSearchInDTO.getStartTimestamp() == null ? null : new Date(orderSearchInDTO.getStartTimestamp()),
+                orderSearchInDTO.getEndTimestamp() == null ? null : new Date(orderSearchInDTO.getEndTimestamp()));
         PageOutDTO<OrderListOutDTO> pageOutDTO = new PageOutDTO<>();
         pageOutDTO.setTotal(page.getTotal());
         pageOutDTO.setPageSize(page.getPageSize());
