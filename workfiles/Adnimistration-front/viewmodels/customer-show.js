@@ -12,7 +12,12 @@ var customershow = new Vue({
         newsSubscribed: '',
         rewordPoints: '',
         defaultAddressId: '',
-        defaultAddress: ''
+        defaultAddress: '',
+        statuses: [
+          { value: 0, label: '禁用' },
+          { value: 1, label: '启用' },
+          { value: 2, label: '不安全' }
+        ]
     },
     mounted() {
         var url = new URL(location.href);
