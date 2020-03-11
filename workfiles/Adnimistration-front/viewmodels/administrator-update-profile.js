@@ -21,7 +21,7 @@ var updateprofile = new Vue({
             axios.get('/administrator/getProfile')
                 .then(function (resp) {
                     console.log(resp);
-                    var da = respo.data;
+                  var da = resp.data;
                   updateprofile.administratorId = da.administratorId;
                   updateprofile.username = da.username;
                   updateprofile.realName = da.realName;
