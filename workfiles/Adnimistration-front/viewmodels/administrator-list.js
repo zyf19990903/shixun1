@@ -3,7 +3,8 @@ var adminlist = new Vue({
     data: {
         pageInfo: '',
         pageNum: 1,
-        selectedAdministrators: []
+        selectedAdministrators: [],
+        statuses: ['禁用', '启用']
     },
     computed: {
         selectedAdministratorIds() {
