@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<ProductListOutDTO> findAll(Integer pageNum, ProductSearchInDTO productSearchInDTO) {
-        PageHelper.startPage(pageNum,5);
+        PageHelper.startPage(pageNum,100);
         Page<ProductListOutDTO> page = productMapper.findAll(productSearchInDTO.getProductCode(),
                 productSearchInDTO.getStatus(),
                 productSearchInDTO.getStockQuantity(),

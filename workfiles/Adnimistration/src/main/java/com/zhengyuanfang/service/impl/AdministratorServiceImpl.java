@@ -109,7 +109,7 @@ public class AdministratorServiceImpl implements AdministratorService {
         administrator.setRealName(administratorCreateInDTO.getRealName());
         administrator.setEmail(administratorCreateInDTO.getEmail());
         administrator.setAvatarUrl(administratorCreateInDTO.getAvatarUrl());
-        administrator.setStatus((byte) AdministratorStatus.Enable.ordinal());
+        administrator.setStatus(administratorCreateInDTO.getStatus());
         administrator.setCreateTime(new Date());
 
         String bcryptHashString = BCrypt.withDefaults().hashToString(12, administratorCreateInDTO.getPassword().toCharArray());
