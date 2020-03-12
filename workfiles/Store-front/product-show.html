@@ -11,8 +11,8 @@
 
 <body>
     <div id="show">
-        <el-input v-model="mainPicUrl" placeholder="请输入主图" readonly></el-input>
-        <el-input v-model="otherPicUrls" placeholder="请输入其他图片" readonly></el-input>
+        <el-image style="width: 100px; height: 100px" :src="mainPicUrl" fit="fill"></el-image>
+        <el-image v-for="item in otherPicUrls" style="width: 60px; height: 60px" :src="item" fit="fill" :preview-src-list="otherPicUrls"></el-image>
         <el-input v-model="productName" placeholder="请输入名称" readonly></el-input>
         价格：<br>
         <s>{{price}}</s> <br>
