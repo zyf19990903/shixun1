@@ -24,7 +24,8 @@ var app = new Vue({
         index: '3',
         icon: 'el-icon-s-order',
         menuItems: [
-
+          { name: '订单列表', index: '3-1', route: '/order/list' },
+          { name: '退货列表', index: '3-2', route: '/return/list' }
         ]
       },
       {
@@ -32,7 +33,7 @@ var app = new Vue({
         index: '4',
         icon: 'el-icon-user',
         menuItems: [
-
+          { name: '用户列表', index: '4-1', route: '/admin/list' }
         ]
       }
       ]
