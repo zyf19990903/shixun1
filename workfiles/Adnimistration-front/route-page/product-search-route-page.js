@@ -43,7 +43,7 @@ const ProductSearchRoutePage = {
                     label="操作"
                     width="100">
                 <template slot-scope="scope">
-                    <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                    <el-button @click="handleClick(scope.row)" type="text" size="small">修改</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -102,6 +102,10 @@ const ProductSearchRoutePage = {
         this.price = '';
         this.stockQuantity = '';
         this.selectedStatus = '';
+      },
+      handleClick(row){
+        console.log(row);
+        this.$router.push({name:'update',params:{productId : row.productId}})
       }
     }
 }
