@@ -10,6 +10,12 @@ const AddressSearchRoutePage = {
             </el-table-column>
             <el-table-column prop="receiverMobile" label="收货人手机">
             </el-table-column>
+            <el-table-column label="操作">
+                <template slot-scope="scope">
+                    <el-button type="primary" size="mini" @click="handleShowClick(scope.row)">详情
+                    </el-button>
+                </template>
+            </el-table-column>
         </el-table>
     </div>
     `,
@@ -41,6 +47,9 @@ const AddressSearchRoutePage = {
           .catch( (error) =>{
             console.log(error);
           });
+      },
+      handleShowClick(row) {
+        this.$router.push({path:'/address/show',query:{addressId:row.addressId}});
       }
     }
 }

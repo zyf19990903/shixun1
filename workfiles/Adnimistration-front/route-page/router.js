@@ -13,6 +13,7 @@ const routes = [
 
 
     { path: '/address/list', component: AddressSearchRoutePage },
+    { path: '/address/show', component: AddressShowRoutePage },
 
 
 
