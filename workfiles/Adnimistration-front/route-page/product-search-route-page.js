@@ -105,7 +105,8 @@ const ProductSearchRoutePage = {
       },
       handleClick(row){
         console.log(row);
-        this.$router.push({name:'update',params:{productId : row.productId}})
+        //this.$router.push({name:'update',params:{productId : row.productId}})
+        this.$router.push({path: '/product/update',query:{productId : row.productId}})
       }
     }
 }

@@ -1,4 +1,4 @@
-const ProductSearchRoutePage = {
+const demo = {
   template: `
     `,
   data() {

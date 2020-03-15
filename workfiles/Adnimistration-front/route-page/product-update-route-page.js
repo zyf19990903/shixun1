@@ -79,7 +79,7 @@ const ProductUpdateRoutePage = {
       selector: '#mytextarea'
     });
 
-    this.productId = this.$route.params.productId;
+    this.productId = this.$route.query.productId;
     if (!this.productId) {
       return;
     }
