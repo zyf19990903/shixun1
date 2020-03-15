@@ -32,6 +32,7 @@ const routes = [
         },
         {
           path: 'history',
+          component: ReturnHistoryCreateRoutePage
         }
       ]
     },
