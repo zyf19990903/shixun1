@@ -18,6 +18,9 @@ const routes = [
 
 
     { path: '/order/list', component: OrderSearchRoutePage },
+    { path: '/order/show', component: OrderShowRoutePage },
+
+
     { path: '/return/list', component: ReturnSearchRoutePage },
     { path: '/admin/list', component: AdminSearchRoutePage }
 ];

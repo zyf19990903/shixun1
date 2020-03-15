@@ -48,6 +48,14 @@ const OrderSearchRoutePage = {
                     {{(new Date(scope.row.updateTimestamp)).toLocaleString()}}
                 </template>
             </el-table-column>
+            <el-table-column
+                    fixed="right"
+                    label="操作"
+                    width="100">
+                <template slot-scope="scope">
+                    <el-button @click="handleShowClick(scope.row)" type="text" size="small">查看</el-button>
+                </template>
+            </el-table-column>
         </el-table>
 
         <el-pagination layout="prev, pager, next" :total="pageInfo.total" @current-change="handlePageChange">
@@ -120,6 +128,9 @@ const OrderSearchRoutePage = {
       this.totalPrice = '';
       this.startTime = '';
       this.endTime = '';
+    },
+    handleShowClick(row){
+      this.$router.push({path:'/order/show',query:{orderId:row.orderId}})
     }
   }
 }
