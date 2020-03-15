@@ -6,7 +6,11 @@ const routes = [
     { path: '/product/list', component: ProductSearchRoutePage },
     { path: '/product/create', component: ProductCreateRoutePage },
     { path: '/product/update', component: ProductUpdateRoutePage },
+
+
     { path: '/customer/list', component: CustomerSearchRoutePage },
+    { path: '/customer/show', component: CustomerShowRoutePage },
+
     { path: '/order/list', component: OrderSearchRoutePage },
     { path: '/return/list', component: ReturnSearchRoutePage },
     { path: '/admin/list', component: AdminSearchRoutePage }

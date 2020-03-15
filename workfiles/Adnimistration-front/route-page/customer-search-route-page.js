@@ -40,6 +40,7 @@ const CustomerSearchRoutePage = {
             <el-table-column label="操作">
                 <template slot-scope="scope">
                     <el-button type="primary" size="mini" @click="handleUpdateStatus(scope.$index, scope.row)">更新状态</el-button>
+                    <el-button type="primary" size="mini" @click="handleShow(scope.row)">查看</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -119,6 +120,9 @@ const CustomerSearchRoutePage = {
           console.log(error);
           alert('状态更新失败');
         });
+    },
+    handleShow(row){
+      this.$router.push({path:'/customer/show',query:{customerId:row.customerId}})
     }
   }
 }
