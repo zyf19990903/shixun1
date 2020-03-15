@@ -117,7 +117,7 @@ const ProductCreateRoutePage = {
           this.mainPicUrl = response.data;
           alert('上传成功');
         })
-        .catch(function (error) {
+        .catch( (error) =>{
           console.log(error);
           alert('上传失败');
         });
@@ -149,7 +149,7 @@ const ProductCreateRoutePage = {
             var url = response.data;
             this.otherPicUrls.push(url);
           })
-          .catch(function (error) {
+          .catch( (error) =>{
             console.log(error);
             alert('上传失败');
           });
