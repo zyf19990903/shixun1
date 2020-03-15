@@ -52,6 +52,11 @@ const ReturnSearchRoutePage = {
                     {{(new Date(scope.row.updateTimestamp)).toLocaleString()}}
                 </template>
             </el-table-column>
+            <el-table-column label="操作">
+                <template slot-scope="scope">
+                    <el-button size="mini" type="primary" @click="handleEditClick(scope.row)">编辑</el-button>
+                </template>
+            </el-table-column>
         </el-table>
 
         <el-pagination layout="prev, pager, next" :total="pageInfo.total" @current-change="handlePageChange">
@@ -122,6 +127,9 @@ const ReturnSearchRoutePage = {
       this.selectedStatus = '';
       this.startTime = '';
       this.endTime = '';
+    },
+    handleEditClick(row) {
+      this.$router.push('/return/edit/' + row.returnId + '/show');
     }
   }
 }

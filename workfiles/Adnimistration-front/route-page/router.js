@@ -22,7 +22,20 @@ const routes = [
 
 
     { path: '/return/list', component: ReturnSearchRoutePage },
+    {
+      path: '/return/edit/:returnId',
+      component: ReturnEditRoutePage,
+      children: [
+        {
+          path: 'show',
+        },
+        {
+          path: 'history',
+        }
+      ]
+    },
     { path: '/admin/list', component: AdminSearchRoutePage }
+
 ];
 
 const router = new VueRouter({
