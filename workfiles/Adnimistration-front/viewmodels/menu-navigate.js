@@ -8,8 +8,7 @@ var app = new Vue({
           index: '1',
           icon: 'el-icon-goods',
           menuItems: [
-            { name: '商品列表', index: '1-1', route: '/product/list' },
-            { name: '商品添加', index: '1-2', route: '/product/create' }
+            { name: '商品列表', index: '1-1', route: '/product/list' }
           ]
         },
         {

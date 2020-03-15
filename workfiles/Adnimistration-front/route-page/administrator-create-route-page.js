@@ -1,6 +1,7 @@
 const AdministratorCreateRoutePage = {
   template: `
     <div id="admincreat">
+        <el-page-header @back="handleGoBack" content="用户添加"></el-page-header>
         <el-input v-model="username" placeholder="请输入用户名"></el-input>
         <el-input v-model="password" placeholder="请输入密码"></el-input>
         <el-input v-model="realName" placeholder="请输入姓名"></el-input>
@@ -50,6 +51,9 @@ const AdministratorCreateRoutePage = {
           .catch( (error) =>{
             console.log(error);
           });
+      },
+      handleGoBack(){
+        this.$router.back();
       }
     }
 }

@@ -1,6 +1,7 @@
 const AdministratorUpdateProfileRoutePage = {
     template: `
     <div id="updateprofile">
+        <el-page-header @back="handleGoBack"></el-page-header>
         用户名:{{username}} <br>
         姓名:<el-input v-model="realName" placeholder="请输入姓名"></el-input>
         邮箱:<el-input v-model="email" placeholder="请输入邮箱"></el-input>
@@ -59,6 +60,9 @@ const AdministratorUpdateProfileRoutePage = {
             console.log(error);
             alert('更新失败');
           });
+      },
+      handleGoBack(){
+        this.$router.back();
       }
     }
 }

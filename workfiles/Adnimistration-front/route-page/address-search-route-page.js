@@ -1,6 +1,7 @@
 const AddressSearchRoutePage = {
   template: `
     <div id="addresslist">
+    <el-page-header @back="handleGoBack" content="地址列表"></el-page-header>
         <el-table :data="addresses" style="width: 100%">
             <el-table-column prop="tag" label="标签">
             </el-table-column>
@@ -50,6 +51,9 @@ const AddressSearchRoutePage = {
       },
       handleShowClick(row) {
         this.$router.push({path:'/address/show',query:{addressId:row.addressId}});
+      },
+      handleGoBack(){
+        this.$router.back();
       }
     }
 }

@@ -1,7 +1,7 @@
 const ProductCreateRoutePage = {
   template: `
     <div id="create">
-  
+        <el-page-header @back="handleGoBack" content="商品添加"></el-page-header>
       <el-input v-model="productCode" placeholder="请输入商品代码"></el-input>
       <el-input v-model="productName" placeholder="请输入商品名称"></el-input>
       <el-input v-model="price" placeholder="请输入价格"></el-input>
@@ -170,6 +170,9 @@ const ProductCreateRoutePage = {
         .catch( (error) =>{
           console.log(error);
         });
+    },
+    handleGoBack(){
+      this.$router.back();
     }
   }
 }

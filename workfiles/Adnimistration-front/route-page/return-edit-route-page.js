@@ -1,7 +1,9 @@
 const ReturnEditRoutePage = {
   template: `
     <el-container>
+        
         <el-header>
+        <el-page-header @back="handleGoBack" content="退货编辑"></el-page-header>
             <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect">
                 <el-menu-item v-for="menuItem in menuItems" :key="menuItem.id" :index="menuItem.index">
                     {{menuItem.name}}
@@ -31,6 +33,9 @@ const ReturnEditRoutePage = {
       handleSelect(val) {
         console.log('menu click', val);
         this.$router.replace(val);
+      },
+      handleGoBack(){
+        this.$router.back();
       }
     }
 }

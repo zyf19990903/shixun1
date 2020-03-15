@@ -1,6 +1,7 @@
 const OrderShowRoutePage = {
   template: `
     <div id="ordershow">
+        <el-page-header @back="handleGoBack" content="订单详情"></el-page-header>
         <h4 align="center">订单详情</h4>
         订单Id：{{orderId}} <br>
         客户姓名：{{customerName}} <br>
@@ -213,6 +214,9 @@ const OrderShowRoutePage = {
           .catch( (error) =>{
             console.log(error);
           });
+      },
+      handleGoBack(){
+        this.$router.back();
       }
     }
 }

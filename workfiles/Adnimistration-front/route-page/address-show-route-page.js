@@ -1,6 +1,7 @@
 const AddressShowRoutePage = {
   template: `
     <div id="addressShow">
+    <el-page-header @back="handleGoBack" content="地址显示"></el-page-header>
         标签：{{tag}} <br>
         内容：{{content}} <br>
         收货人姓名：{{receiverName}} <br>
@@ -44,6 +45,9 @@ const AddressShowRoutePage = {
           .catch( (error) =>{
             console.log(error);
           });
+      },
+      handleGoBack(){
+        this.$router.back();
       }
     }
 }

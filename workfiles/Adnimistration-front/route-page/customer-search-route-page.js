@@ -1,7 +1,6 @@
 const CustomerSearchRoutePage = {
   template: `
   <div id="customerlist">
-
         <el-input v-model="username" placeholder="请输入用户名"></el-input>
         <el-input v-model="realName" placeholder="请输入客户姓名"></el-input>
         <el-input v-model="mobile" placeholder="请输入手机"></el-input>

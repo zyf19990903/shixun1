@@ -1,7 +1,7 @@
 const ProductUpdateRoutePage = {
   template: `
   <div id="update">
-
+        <el-page-header @back="handleGoBack" content="商品编辑"></el-page-header>
         <el-input v-model="productCode" placeholder="请输入商品代码" readonly></el-input>
         <el-input v-model="productName" placeholder="请输入商品名称"></el-input>
         <el-input v-model="price" placeholder="请输入价格"></el-input>
@@ -197,6 +197,9 @@ const ProductUpdateRoutePage = {
         .catch( (error) =>{
           console.log(error);
         });
+    },
+    handleGoBack(){
+      this.$router.back();
     }
   }
 }
