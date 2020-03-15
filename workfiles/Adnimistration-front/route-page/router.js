@@ -11,6 +11,11 @@ const routes = [
     { path: '/customer/list', component: CustomerSearchRoutePage },
     { path: '/customer/show', component: CustomerShowRoutePage },
 
+
+    { path: '/address/list', component: AddressSearchRoutePage },
+
+
+
     { path: '/order/list', component: OrderSearchRoutePage },
     { path: '/return/list', component: ReturnSearchRoutePage },
     { path: '/admin/list', component: AdminSearchRoutePage }

@@ -12,6 +12,7 @@ const CustomerShowRoutePage = {
         积分：{{rewordPoints}} <br>
         默认地址：{{defaultAddress}} <br>
         <br>
+       <el-button type="primary" @click="handleAddressIndexClick">地址列表</el-button>
     </div>
     `,
   data() {
@@ -69,6 +70,9 @@ const CustomerShowRoutePage = {
           .catch( (error) =>{
             console.log(error);
           });
+      },
+      handleAddressIndexClick() {
+        this.$router.push({path:'/address/list',query:{customerId: this.customerId}});
       }
     }
 }
