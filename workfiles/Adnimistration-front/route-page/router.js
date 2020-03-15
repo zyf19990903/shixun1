@@ -28,6 +28,7 @@ const routes = [
       children: [
         {
           path: 'show',
+          component: ReturnShowRoutePage
         },
         {
           path: 'history',
