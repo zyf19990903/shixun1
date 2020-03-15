@@ -4,15 +4,15 @@ const OrderShowRoutePage = {
         <h4 align="center">订单详情</h4>
         订单Id：{{orderId}} <br>
         客户姓名：{{customerName}} <br>
-        订单状态：{{orderStatuses[status].label}} <br>
+        订单状态：{{orderStatuses[status].label ? orderStatuses[status].label :''}} <br>
         总价：{{totalPrice}} <br>
         积分：{{rewordPoints}} <br>
         下单时间：{{(new Date(createTimestamp)).toLocaleString()}} <br>
         更新时间：{{(new Date(updateTimestamp)).toLocaleString()}} <br>
-        寄送方式：{{shipMethods[shipMethod].label}} <br>
+        寄送方式：{{shipMethods[shipMethod].label ? shipMethods[shipMethod].label : ''}} <br>
         寄送地址：{{shipAddress}} <br>
         邮费：{{shipPrice}} <br>
-        支付方式：{{payMethods[payMethod].label}} <br>
+        支付方式：{{payMethods[payMethod].label ? payMethods[payMethod].label : ''}} <br>
         发票地址：{{invoiceAddress}} <br>
         发票金额：{{invoicePrice}} <br>
         备注：{{comment}} <br>
