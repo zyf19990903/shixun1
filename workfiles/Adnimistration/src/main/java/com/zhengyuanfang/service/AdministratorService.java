@@ -3,9 +3,9 @@ package com.zhengyuanfang.service;
 import com.zhengyuanfang.dto.in.*;
 import com.zhengyuanfang.dto.out.*;
 import com.zhengyuanfang.exception.ClientException;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.List;
-import java.util.Map;
 
 public interface AdministratorService {
 
@@ -29,5 +29,5 @@ public interface AdministratorService {
 
     String getByEmail(String email) throws ClientException;
 
-    void restPwd(AdministratorResetPwdInDTO administratorResetPwdInDTO, Map<String, String> emailPwdResetCodeMap) throws ClientException;
+    void restPwd(AdministratorResetPwdInDTO administratorResetPwdInDTO, RedisTemplate<String, String> redisTemplate) throws ClientException;
 }

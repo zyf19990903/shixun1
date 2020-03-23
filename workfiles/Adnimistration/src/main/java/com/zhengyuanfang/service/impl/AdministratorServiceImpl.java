@@ -6,7 +6,6 @@ import com.github.pagehelper.PageHelper;
 import com.zhengyuanfang.constant.ClientExceptionConstant;
 import com.zhengyuanfang.dto.in.*;
 import com.zhengyuanfang.dto.out.*;
-import com.zhengyuanfang.enumeration.AdministratorStatus;
 import com.zhengyuanfang.exception.ClientException;
 import com.zhengyuanfang.mapper.AdministratorMapper;
 import com.zhengyuanfang.po.Administrator;
@@ -14,14 +13,15 @@ import com.zhengyuanfang.service.AdministratorService;
 import com.zhengyuanfang.util.JWTUtil;
 import com.zhengyuanfang.util.MailBean;
 import com.zhengyuanfang.util.MailService;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.DatatypeConverter;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,8 +36,10 @@ public class AdministratorServiceImpl implements AdministratorService {
     @Autowired
     private SecureRandom secureRandom;
 
+//    @Autowired
+//    private MailService mailService;
     @Autowired
-    private MailService mailService;
+    private RocketMQTemplate rocketMQTemplate;
 
     @Override
     public AdministratorLoginOutDTO getByUsername(AdministratorLoginInDTO administratorLoginInDTO) throws ClientException {
@@ -174,24 +176,22 @@ public class AdministratorServiceImpl implements AdministratorService {
         mailBean.setReceiver(email);
         mailBean.setSubject("jcart管理端管理员密码重置");
         mailBean.setContent(hex);
-        try {
-            mailService.sendSimpleMail(mailBean);
-            return hex;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "发送失败";
-        }
+
+        rocketMQTemplate.convertAndSend("sendPwdResetByEmail",mailBean);
+
+        return hex;
     }
 
     @Override
-    public void restPwd(AdministratorResetPwdInDTO administratorResetPwdInDTO, Map<String, String> emailPwdResetCodeMap) throws ClientException {
+    public void restPwd(AdministratorResetPwdInDTO administratorResetPwdInDTO, RedisTemplate<String, String> redisTemplate) throws ClientException {
         String email = administratorResetPwdInDTO.getEmail();
         if (email == null) {
             throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_PWDRESET_EMAIL_NONE_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_PWDRESET_EMAIL_NONE_ERRMSG);
         }
 
         //获取邮箱里面的重置码
-        String innerResetCode = emailPwdResetCodeMap.get(email);
+        //String innerResetCode = emailPwdResetCodeMap.get(email);
+        String innerResetCode = redisTemplate.opsForValue().get("emailReset" + email);
         if (innerResetCode == null) {
             throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_PWDRESET_INNER_RESETCODE_NONE_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_PWDRESET_INNER_RESETCODE_NONE_ERRMSG);
         }
@@ -227,6 +227,7 @@ public class AdministratorServiceImpl implements AdministratorService {
         administratorMapper.updateByPrimaryKeySelective(administrator);
 
         //删除对象
-        emailPwdResetCodeMap.remove(email);
+       // emailPwdResetCodeMap.remove(email);
+        redisTemplate.delete("emailReset"+email);
     }
 }

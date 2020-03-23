@@ -13,6 +13,7 @@ import com.zhengyuanfang.service.AdministratorService;
 import com.zhengyuanfang.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,7 +34,10 @@ public class AdministratorController {
     @Autowired
     private AdministratorService administratorService;
 
-    private Map<String, String> emailPwdResetCodeMap = new HashMap<>();
+   // private Map<String, String> emailPwdResetCodeMap = new HashMap<>();
+
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
 
     /*
     *管理员登录
@@ -69,7 +74,8 @@ public class AdministratorController {
     public void getPwdResetCode(@RequestParam String email) throws ClientException {
         //获取重置码
         String hex = administratorService.getByEmail(email);
-        emailPwdResetCodeMap.put(email, hex);
+        //emailPwdResetCodeMap.put(email, hex);
+        redisTemplate.opsForValue().set("emailReset"+email,hex,5L, TimeUnit.MINUTES);
     }
 
     /*
@@ -77,7 +83,7 @@ public class AdministratorController {
      */
     @PostMapping("/resetPwd")
     public void resetPwd(@RequestBody AdministratorResetPwdInDTO administratorResetPwdInDTO) throws ClientException {
-       administratorService.restPwd(administratorResetPwdInDTO,emailPwdResetCodeMap);
+        administratorService.restPwd(administratorResetPwdInDTO,redisTemplate);
     }
 
     /*
