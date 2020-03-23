@@ -16,6 +16,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/product")
@@ -73,7 +74,7 @@ public class ProductController {
             return productOperations;
         }else {
             List<ProductOperation> hotProducts = productOperationService.selectHotProduct();
-            redisTemplate.opsForValue().set("HotProducts", JSON.toJSONString(hotProducts));
+            redisTemplate.opsForValue().set("HotProducts", JSON.toJSONString(hotProducts),1L, TimeUnit.DAYS);
             return hotProducts;
         }
     }
