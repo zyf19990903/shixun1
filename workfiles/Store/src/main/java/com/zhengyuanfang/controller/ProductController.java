@@ -7,11 +7,15 @@ import com.zhengyuanfang.dto.out.PageOutDTO;
 import com.zhengyuanfang.dto.out.ProductListOutDTO;
 import com.zhengyuanfang.dto.out.ProductShowOutDTO;
 import com.zhengyuanfang.po.HotProductDTO;
+import com.zhengyuanfang.po.ProductOperation;
 import com.zhengyuanfang.service.ProductOperationService;
 import com.zhengyuanfang.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/product")
@@ -26,6 +30,9 @@ public class ProductController {
 
     @Autowired
     private KafkaTemplate kafkaTemplate;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
     /*
      * 模糊分页查询商品列表
      */
@@ -55,6 +62,20 @@ public class ProductController {
 
         kafkaTemplate.send("test", JSON.toJSONString(hotProductDTO));
         return productShowOutDTO;
+    }
+
+    @GetMapping("/hot")
+    public List<ProductOperation> hot(){
+
+        String hotProductsJson = redisTemplate.opsForValue().get("HotProducts");
+        if (hotProductsJson != null){
+            List<ProductOperation> productOperations = JSON.parseArray(hotProductsJson, ProductOperation.class);
+            return productOperations;
+        }else {
+            List<ProductOperation> hotProducts = productOperationService.selectHotProduct();
+            redisTemplate.opsForValue().set("HotProducts", JSON.toJSONString(hotProducts));
+            return hotProducts;
+        }
     }
 
 }
