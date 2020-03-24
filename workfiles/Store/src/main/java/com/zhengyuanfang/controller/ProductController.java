@@ -6,6 +6,8 @@ import com.zhengyuanfang.dto.in.ProductSearchInDTO;
 import com.zhengyuanfang.dto.out.PageOutDTO;
 import com.zhengyuanfang.dto.out.ProductListOutDTO;
 import com.zhengyuanfang.dto.out.ProductShowOutDTO;
+import com.zhengyuanfang.es.doc.ProductDoc;
+import com.zhengyuanfang.es.repository.ProductRepository;
 import com.zhengyuanfang.po.HotProductDTO;
 import com.zhengyuanfang.po.ProductOperation;
 import com.zhengyuanfang.service.ProductOperationService;
@@ -34,11 +36,20 @@ public class ProductController {
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+
+    @Autowired
+    private ProductRepository productRepository;
     /*
      * 模糊分页查询商品列表
      */
     @GetMapping("/list")
     public PageOutDTO<ProductListOutDTO> findAll(@RequestParam(required = false,defaultValue = "1")Integer pageNum, ProductSearchInDTO productSearchInDTO){
+
+        String keyword = productSearchInDTO.getKeyword();
+        List<ProductDoc> productDocs = productRepository.findByProductNameLikeOrProductAbstractLike(keyword, keyword);
+
+        System.out.println(productDocs);
+
         Page<ProductListOutDTO> page = productService.findAll(productSearchInDTO,pageNum);
         PageOutDTO<ProductListOutDTO> pageOutDTO = new PageOutDTO<>();
         pageOutDTO.setTotal(page.getTotal());
