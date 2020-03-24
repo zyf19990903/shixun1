@@ -8,11 +8,14 @@ import com.zhengyuanfang.dto.in.ProductSearchInDTO;
 import com.zhengyuanfang.dto.in.ProductUpdateInDTO;
 import com.zhengyuanfang.dto.out.ProductListOutDTO;
 import com.zhengyuanfang.dto.out.ProductShowOutDTO;
+import com.zhengyuanfang.es.doc.ProductDoc;
+import com.zhengyuanfang.es.repository.ProductRepository;
 import com.zhengyuanfang.mapper.ProductDetailMapper;
 import com.zhengyuanfang.mapper.ProductMapper;
 import com.zhengyuanfang.po.Product;
 import com.zhengyuanfang.po.ProductDetail;
 import com.zhengyuanfang.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +28,9 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
     @Resource
     private ProductDetailMapper productDetailMapper;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Override
     public Page<ProductListOutDTO> findAll(Integer pageNum, ProductSearchInDTO productSearchInDTO) {
@@ -64,6 +70,15 @@ public class ProductServiceImpl implements ProductService {
         productDetail.setOtherPicUrls(JSON.toJSONString(otherPicUrls));
 
         productDetailMapper.insertSelective(productDetail);
+
+        ProductDoc productDoc = new ProductDoc();
+        productDoc.setProductId(productId);
+        productDoc.setProductCode(productCreateInDTO.getProductCode());
+        productDoc.setProductName(productCreateInDTO.getProductName());
+        productDoc.setProductAbstract(productCreateInDTO.getProductAbstract());
+
+        productRepository.save(productDoc);
+
         return productId;
     }
 
