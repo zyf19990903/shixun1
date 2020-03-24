@@ -1,49 +1,22 @@
 package com.zhengyuanfang.dto.in;
 
 public class ProductSearchInDTO {
-    private String productCode;
-    private String productName;
-    private Double price;
-    private Integer stockQuantity;
-    private Byte status;
+    private String keyword;
+    private Byte sortBy;
 
-    public String getProductCode() {
-        return productCode;
+    public String getKeyword() {
+        return keyword;
     }
 
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
-    public String getProductName() {
-        return productName;
+    public Byte getSortBy() {
+        return sortBy;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Integer getStockQuantity() {
-        return stockQuantity;
-    }
-
-    public void setStockQuantity(Integer stockQuantity) {
-        this.stockQuantity = stockQuantity;
-    }
-
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
+    public void setSortBy(Byte sortBy) {
+        this.sortBy = sortBy;
     }
 }

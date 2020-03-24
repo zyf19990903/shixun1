@@ -39,7 +39,7 @@ public class ProductController {
      */
     @GetMapping("/list")
     public PageOutDTO<ProductListOutDTO> findAll(@RequestParam(required = false,defaultValue = "1")Integer pageNum, ProductSearchInDTO productSearchInDTO){
-        Page<ProductListOutDTO> page = productService.findAll(pageNum);
+        Page<ProductListOutDTO> page = productService.findAll(productSearchInDTO,pageNum);
         PageOutDTO<ProductListOutDTO> pageOutDTO = new PageOutDTO<>();
         pageOutDTO.setTotal(page.getTotal());
         pageOutDTO.setPageSize(page.getPageSize());

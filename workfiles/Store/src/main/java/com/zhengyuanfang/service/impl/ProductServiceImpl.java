@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
+import com.zhengyuanfang.dto.in.ProductSearchInDTO;
 import com.zhengyuanfang.dto.out.ProductListOutDTO;
 import com.zhengyuanfang.dto.out.ProductShowOutDTO;
+import com.zhengyuanfang.enumeration.ProductStatus;
 import com.zhengyuanfang.mapper.ProductDetailMapper;
 import com.zhengyuanfang.mapper.ProductMapper;
 import com.zhengyuanfang.po.Product;
@@ -50,9 +52,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductListOutDTO> findAll(Integer pageNum) {
+    public Page<ProductListOutDTO> findAll(ProductSearchInDTO productSearchInDTO, Integer pageNum) {
         PageHelper.startPage(pageNum, 10);
-        Page<ProductListOutDTO> page = productMapper.findAll();
+        Page<ProductListOutDTO> page = productMapper.findAll(productSearchInDTO.getKeyword(), (byte) ProductStatus.OnSales.ordinal());
         return page;
     }
 
